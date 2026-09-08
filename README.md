@@ -1,4 +1,4 @@
-# Cadastro de Usuários
+# Users register app
 
 Full-stack monorepo project with React on the client and Node.js on the server, focused on API development, backend fundamentals, and full-stack architecture.
 
