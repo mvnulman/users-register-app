@@ -9,7 +9,25 @@ app.use(express.json());
 
 app.get('/users', async (req, res) => {
   try {
-    const users = await prisma.user.findMany();
+    const { name, email, age } = req.query;
+    const where = {};
+
+    if (name) {
+      where.name = { contains: String(name), mode: 'insensitive' };
+    }
+
+    if (email) {
+      where.email = { equals: String(email), mode: 'insensitive' };
+    }
+
+    if (age !== undefined) {
+      const parsedAge = Number(age);
+      if (Number.isInteger(parsedAge)) {
+        where.age = parsedAge;
+      }
+    }
+
+    const users = await prisma.user.findMany({ where });
     res.status(200).json(users);
   } catch (error) {
     res.status(500).json({ message: 'Internal server error' });
