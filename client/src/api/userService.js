@@ -31,6 +31,22 @@ const fetchUsers = async (name = '') => {
   return response.json()
 }
 
+const deleteUser = async (id) => {
+  const response = await fetch(`${API_URL}/users/${encodeURIComponent(id)}`, {
+    method: 'DELETE',
+  })
+
+  const data = await response.json().catch(() => ({}))
+
+  if (!response.ok) {
+    throw new Error(
+      data.message ?? 'Não foi possível remover o usuário. Tente novamente.',
+    )
+  }
+
+  return data
+}
+
 const useAddUser = () => {
   const queryClient = useQueryClient()
 
@@ -48,4 +64,15 @@ const useUsers = (name = '') =>
     queryFn: () => fetchUsers(name),
   })
 
-export { useAddUser, useUsers }
+const useDeleteUser = () => {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: deleteUser,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['users'] })
+    },
+  })
+}
+
+export { useAddUser, useDeleteUser, useUsers }

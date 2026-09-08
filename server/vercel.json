@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/users",
+      "destination": "/api/index"
+    },
+    {
+      "source": "/users/:id",
+      "destination": "/api/index"
+    }
+  ]
+}
