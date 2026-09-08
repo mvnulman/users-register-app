@@ -4,12 +4,12 @@ Full-stack monorepo project with React on the client and Node.js on the server, 
 
 It is a complete user management system composed of two independently developed parts that communicate over HTTP:
 
-- **Express + Prisma (MongoDB) REST API** — exposes a JSON-only CRUD interface (`GET`, `POST`, `PUT`, `DELETE /users`) with search/filter support through query parameters, CORS enabled for cross-origin consumption, and duplicate-email handling (HTTP 409).
-- **React (Vite) single-page application** — a modern, type-driven frontend styled with Tailwind CSS that consumes the API through TanStack Query, validates input with Zod, and manages forms with React Hook Form.
+- **Express + Prisma (MongoDB) REST API** exposes a JSON-only CRUD interface (`GET`, `POST`, `PUT`, `DELETE /users`) with search/filter support through query parameters, CORS enabled for cross-origin consumption, and duplicate-email handling (HTTP 409).
+- **React (Vite) single-page application** a modern, type-driven frontend styled with Tailwind CSS that consumes the API through TanStack Query, validates input with Zod, and manages forms with React Hook Form.
 
 ## Goal
 
-The main goal of this project is to strengthen backend development skills — especially Node.js, API design, database modeling, and REST conventions — while exercising the full-stack relationship between an API and a consumer application.
+The main goal of this project is to strengthen backend development skills especially Node.js, API design, database modeling, and REST conventions while exercising the full-stack relationship between an API and a consumer application.
 
 Beyond learning the server side, the project also explores how frontend and backend integrate around shared contracts:
 
