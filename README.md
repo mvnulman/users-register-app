@@ -16,13 +16,23 @@ The goal of this project is to strengthen backend development skills, especially
 ### Frontend
 - React
 - Vite
+- Tailwind CSS
+- React Router
+- React Hook Form
+- Zod
+- TanStack Query (React Query)
 
 ## Project Structure
 
 ```
 react-node-fullstack-app/
 ├── client/    # React application (Vite)
+│   └── src/
+│       ├── api/          # React Query services (userService)
+│       ├── components/   # Pages and form components
+│       └── validation/   # Zod schemas
 ├── server/    # Node.js API (Express + Prisma)
+├── docs/      # Documentation and screenshots
 ├── .gitignore
 └── README.md
 ```
@@ -50,6 +60,22 @@ npm run dev
 ```
 
 The client runs on `http://localhost:5173`.
+
+## Screenshots
+
+### User registration form
+
+![User registration form](docs/screenshots/form-cadastro.png)
+
+### Registered users list
+
+![Registered users list](docs/screenshots/lista-usuarios.png)
+
+## Features
+
+- User registration form with `name`, `email`, and `age` fields (Zod + React Hook Form validation).
+- Registered users displayed in a full-page table with search by name (TanStack Query + backend query params).
+- Auto-refresh of the user list after a new registration (query invalidation).
 
 ## Learning Journey
 
