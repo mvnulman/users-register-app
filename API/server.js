@@ -1,44 +1,70 @@
 import express from 'express';
+import { PrismaClient } from '@prisma/client';
 
+const prisma = new PrismaClient();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 
-const users = [];
-
-app.get('/users', (req, res) => {
-  res.status(200).json(users);
-});
-
-app.post('/users', (req, res) => {
-  const user = { id: users.length + 1, ...req.body };
-  users.push(user);
-  res.status(201).json(user);
-});
-
-app.put('/users/:id', (req, res) => {
-  const id = Number(req.params.id);
-  const userIndex = users.findIndex((user) => user.id === id);
-
-  if (userIndex === -1) {
-    return res.status(404).json({ message: 'User not found' });
+app.get('/users', async (req, res) => {
+  try {
+    const users = await prisma.user.findMany();
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(500).json({ message: 'Internal server error' });
   }
-
-  users[userIndex] = { ...users[userIndex], ...req.body };
-  res.status(200).json(users[userIndex]);
 });
 
-app.delete('/users/:id', (req, res) => {
-  const id = Number(req.params.id);
-  const userIndex = users.findIndex((user) => user.id === id);
-
-  if (userIndex === -1) {
-    return res.status(404).json({ message: 'User not found' });
+app.post('/users', async (req, res) => {
+  try {
+    const user = await prisma.user.create({
+      data: {
+        email: req.body.email,
+        name: req.body.name,
+        age: Number(req.body.age)
+      }
+    });
+    res.status(201).json(user);
+  } catch (error) {
+    if (error.code === 'P2002') {
+      return res.status(409).json({ message: 'Email already exists' });
+    }
+    res.status(500).json({ message: 'Internal server error' });
   }
+});
 
-  users.splice(userIndex, 1);
-  res.status(200).json({ message: 'User deleted' });
+app.put('/users/:id', async (req, res) => {
+  try {
+    const user = await prisma.user.update({
+      where: { id: req.params.id },
+      data: {
+        email: req.body.email,
+        name: req.body.name,
+        age: Number(req.body.age)
+      }
+    });
+    res.status(200).json(user);
+  } catch (error) {
+    if (error.code === 'P2025') {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+app.delete('/users/:id', async (req, res) => {
+  try {
+    await prisma.user.delete({
+      where: { id: req.params.id }
+    });
+    res.status(200).json({ message: 'User deleted' });
+  } catch (error) {
+    if (error.code === 'P2025') {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    res.status(500).json({ message: 'Internal server error' });
+  }
 });
 
 app.listen(PORT, () => {
