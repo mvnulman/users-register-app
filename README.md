@@ -1,4 +1,4 @@
-# react-node-fullstack-app
+# Cadastro de Usuários
 
 Full-stack monorepo project with React on the client and Node.js on the server, focused on API development, backend fundamentals, and full-stack architecture.
 
@@ -48,7 +48,7 @@ Beyond learning the server side, the project also explores how frontend and back
 ## Project Structure
 
 ```
-react-node-fullstack-app/
+cadastro-de-usuarios/
 ├── client/    # React application (Vite)
 │   └── src/
 │       ├── api/          # React Query services (userService)

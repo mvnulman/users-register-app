@@ -1,8 +1,9 @@
 {
-  "name": "client",
+  "name": "cadastro-usuarios",
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "description": "Frontend de cadastro e listagem de usuários (React + Vite + Tailwind + TanStack Query)",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
